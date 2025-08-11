@@ -1,0 +1,140 @@
+// Classe Livro
+class Livro {
+    private String titulo;
+    private String autor;
+    private int anoPublicacao;
+    private double preco;
+    private boolean disponivel;
+
+    public Livro(String titulo, String autor, int anoPublicacao, double preco, boolean disponivel) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.anoPublicacao = anoPublicacao;
+        this.preco = preco;
+        this.disponivel = disponivel;
+    }
+
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+
+    public String getAutor() { return autor; }
+    public void setAutor(String autor) { this.autor = autor; }
+
+    public int getAnoPublicacao() { return anoPublicacao; }
+    public void setAnoPublicacao(int anoPublicacao) { this.anoPublicacao = anoPublicacao; }
+
+    public double getPreco() { return preco; }
+    public void setPreco(double preco) { this.preco = preco; }
+
+    public boolean isDisponivel() { return disponivel; }
+    public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
+
+    public void emprestar() {
+        if (disponivel) {
+            disponivel = false;
+            System.out.println("Livro emprestado com sucesso!");
+        } else {
+            System.out.println("Livro já está emprestado.");
+        }
+    }
+
+    public void devolver() {
+        if (!disponivel) {
+            disponivel = true;
+            System.out.println("Livro devolvido com sucesso!");
+        } else {
+            System.out.println("Livro já está disponível.");
+        }
+    }
+
+    public int obterIdade(int anoAtual) {
+        return anoAtual - anoPublicacao;
+    }
+
+    public void aplicarDesconto(double percentual) {
+        if (percentual > 0 && percentual <= 100) {
+            preco -= preco * (percentual / 100);
+            System.out.println("Desconto aplicado. Novo preço: R$ " + preco);
+        } else {
+            System.out.println("Percentual inválido!");
+        }
+    }
+}
+
+// Classe Biblioteca
+class Biblioteca {
+    private Livro[] livros = new Livro[10];
+    private int quantidadeLivros = 0;
+
+    // Adicionar um livro ao array
+    public void adicionarLivro(Livro livro) {
+        if (quantidadeLivros < livros.length) {
+            livros[quantidadeLivros] = livro;
+            quantidadeLivros++;
+            System.out.println("Livro adicionado: " + livro.getTitulo());
+        } else {
+            System.out.println("Biblioteca cheia! Não é possível adicionar mais livros.");
+        }
+    }
+
+    // Buscar livro pelo título
+    public Livro buscarLivroPorTitulo(String titulo) {
+        for (int i = 0; i < quantidadeLivros; i++) {
+            if (livros[i].getTitulo().equalsIgnoreCase(titulo)) {
+                return livros[i];
+            }
+        }
+        return null;
+    }
+
+    // Listar apenas livros disponíveis
+    public void listarLivrosDisponiveis() {
+        System.out.println("Livros disponíveis:");
+        for (int i = 0; i < quantidadeLivros; i++) {
+            if (livros[i].isDisponivel()) {
+                System.out.println("- " + livros[i].getTitulo() + " (" + livros[i].getAutor() + ")");
+            }
+        }
+    }
+
+    // Calcular valor total dos livros
+    public double calcularValorTotal() {
+        double total = 0;
+        for (int i = 0; i < quantidadeLivros; i++) {
+            total += livros[i].getPreco();
+        }
+        return total;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        
+        Biblioteca biblioteca = new Biblioteca();
+
+        // Criando livros
+        Livro livro1 = new Livro("O Senhor dos Anéis", "J.R.R. Tolkien", 1954, 120.00, true);
+        Livro livro2 = new Livro("Dom Quixote", "Miguel de Cervantes", 1605, 80.00, true);
+        Livro livro3 = new Livro("1984", "George Orwell", 1949, 50.00, false);
+
+        // Adicionando livros
+        biblioteca.adicionarLivro(livro1);
+        biblioteca.adicionarLivro(livro2);
+        biblioteca.adicionarLivro(livro3);
+
+        
+        biblioteca.listarLivrosDisponiveis();
+
+        
+        Livro encontrado = biblioteca.buscarLivroPorTitulo("1984");
+        if (encontrado != null) {
+            System.out.println("Livro encontrado: " + encontrado.getTitulo());
+        } else {
+            System.out.println("Livro não encontrado.");
+        }
+
+        // Calculando valor total
+        System.out.println("Valor total dos livros: R$ " + biblioteca.calcularValorTotal());
+    }
+}
