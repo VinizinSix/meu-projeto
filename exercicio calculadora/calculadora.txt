@@ -1,0 +1,45 @@
+// Classe Calculadora
+class Calculadora {
+
+    //somar dois números
+    public double somar(double a, double b) {
+        return a + b;
+    }
+
+    //subtrair dois números
+    public double subtrair(double a, double b) {
+        return a - b;
+    }
+
+    //multiplicar dois números
+    public double multiplicar(double a, double b) {
+        return a * b;
+    }
+
+    //dividir dois números
+    public double dividir(double a, double b) {
+        if (b != 0) {
+            return a / b;
+        } else {
+            System.out.println("Erro: divisão por zero!");
+            return 0;
+        }
+    }
+}
+
+//teste
+public class Main {
+    public static void main(String[] args) {
+        Calculadora calc = new Calculadora();
+
+        double soma = calc.somar(10, 5);
+        double subtracao = calc.subtrair(10, 5);
+        double multiplicacao = calc.multiplicar(10, 5);
+        double divisao = calc.dividir(10, 5);
+
+        System.out.println("Soma: " + soma);
+        System.out.println("Subtração: " + subtracao);
+        System.out.println("Multiplicação: " + multiplicacao);
+        System.out.println("Divisão: " + divisao);
+    }
+}
